@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Чарівна вікторина — «Пані Метелиця»</title>
+<style>
+:root{--ink:#21304e;--blue:#243d78;--gold:#ffd56b;--cream:#fffaf0;--pink:#eaa6c8;--green:#bde8d0}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:"Trebuchet MS",Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 15% 15%,#fff4c9 0 2px,transparent 3px),radial-gradient(circle at 85% 30%,#fff 0 2px,transparent 3px),linear-gradient(160deg,#172957,#465a9a 48%,#9b9ed0);background-size:100px 100px,140px 140px,auto;padding:24px 14px 40px}
+.shell{max-width:850px;margin:auto}
+header{text-align:center;color:white;padding:8px 10px 20px}
+.kicker{font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;color:#ffe8a5;font-weight:bold}
+h1{font-family:Georgia,serif;font-size:clamp(2rem,5vw,3.5rem);line-height:1.08;margin:12px 0;text-shadow:0 4px 0 #26366b,0 8px 20px #101b43}
+header p{font-size:1.05rem;line-height:1.5;max-width:650px;margin:10px auto;color:#f5f5ff}
+.card{background:var(--cream);border:4px solid #f8d982;border-radius:28px;box-shadow:0 16px 40px #101b4366;overflow:hidden}
+.topbar{height:12px;background:linear-gradient(90deg,#f4a6ca,#ffd56b,#bde8d0,#a6c9ff,#f4a6ca)}
+.content{padding:clamp(18px,4vw,34px)}
+.stats{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.pill{background:#e9edff;color:#293d79;border-radius:99px;padding:9px 14px;font-weight:bold;font-size:.95rem}
+.track{height:12px;background:#e2e5f4;border-radius:99px;overflow:hidden;margin:10px 0 25px}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#8ccfb1,#f4cb64);transition:width .35s;border-radius:99px}
+.level{font-size:.8rem;font-weight:bold;letter-spacing:.1em;text-transform:uppercase;color:#7b5b9c;margin-bottom:9px}
+.question{font-size:clamp(1.25rem,3.4vw,1.75rem);line-height:1.35;margin:0 0 22px;font-weight:800}
+.answers{display:grid;gap:12px}
+.answer{display:flex;align-items:center;text-align:left;gap:12px;width:100%;padding:14px 16px;border:2px solid #d9def1;border-radius:16px;background:white;color:var(--ink);font:inherit;font-size:1.03rem;line-height:1.35;cursor:pointer;transition:transform .15s,border-color .15s,background .15s}
+.answer:hover:not(:disabled){transform:translateY(-2px);border-color:#8d9dd7;background:#f6f7ff}
+.letter{flex:0 0 32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#edf0ff;color:#394c8d;font-weight:bold}
+.answer:focus-visible,.btn:focus-visible{outline:3px solid #e5a4c8;outline-offset:3px}
+.answer:disabled{cursor:default}
+.answer.correct{background:#e7f8ee;border-color:#50ad7a}
+.answer.correct .letter{background:#50ad7a;color:white}
+.answer.wrong{background:#fff0f0;border-color:#d96c77}
+.answer.wrong .letter{background:#d96c77;color:white}
+.feedback{display:none;margin-top:18px;padding:15px 17px;border-radius:15px;line-height:1.5;font-weight:bold}
+.feedback.show{display:block}
+.feedback.good{background:#e7f8ee;color:#1f7044}
+.feedback.bad{background:#fff0f0;color:#963b4a}
+.actions{display:flex;justify-content:flex-end;margin-top:22px;gap:12px;flex-wrap:wrap}
+.btn{border:0;border-radius:99px;padding:13px 23px;font:inherit;font-weight:bold;font-size:1rem;cursor:pointer}
+.primary{background:linear-gradient(135deg,#ffda78,#f2b7d4);color:#27315b;box-shadow:0 4px 0 #d49bb7}
+.primary:hover{filter:brightness(1.04);transform:translateY(-1px)}
+.secondary{background:#e9edff;color:#293d79}
+.hidden{display:none!important}
+.result{text-align:center;padding:12px 4px}
+.result .emoji{font-size:4rem;line-height:1.2}
+.result h2{font-family:Georgia,serif;font-size:clamp(1.8rem,4vw,2.6rem);margin:12px 0;color:#28396f}
+.score-big{font-size:2.6rem;font-weight:900;color:#8b579d;margin:10px 0}
+.result p{font-size:1.1rem;line-height:1.6;max-width:600px;margin:12px auto 20px}
+.stars{font-size:1.5rem;letter-spacing:.2em;color:#dba72d}
+footer{text-align:center;color:#e8eaff;font-size:.85rem;margin-top:18px}
+@media(max-width:520px){body{padding:12px 8px 24px}.content{padding:18px 14px}.answer{padding:12px;font-size:.98rem}.stats{margin-bottom:14px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <div class="kicker">✨ Казкова пригода для 5 класу ✨</div>
+  <h1>Пані Метелиця</h1>
+  <p>Вирушай у чарівний світ братів Грімм! Дай відповіді на 12 запитань, збирай золоті зірочки та доведи, що добре знаєш казку.</p>
+</header>
+<main class="card">
+<div class="topbar"></div>
+<div class="content">
+<section id="game">
+  <div class="stats"><span class="pill" id="counter">Запитання 1 із 12</span><span class="pill" id="score">⭐ Бали: 0</span></div>
+  <div class="track" aria-label="Прогрес проходження"><div class="fill" id="progress"></div></div>
+  <div class="level" id="level">Рівень: легкий</div>
+  <h2 class="question" id="question">Завантаження запитання…</h2>
+  <div class="answers" id="answers"></div>
+  <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+  <div class="actions"><button class="btn primary hidden" id="next">Наступне запитання ✨</button></div>
+</section>
+<section class="result hidden" id="result" aria-live="polite">
+  <div class="emoji" id="resultEmoji">🏆</div>
+  <div class="stars" id="resultStars">★ ★ ★</div>
+  <h2 id="resultTitle">Казкова перемога!</h2>
+  <div class="score-big" id="finalScore">0 / 12</div>
+  <p id="resultText"></p>
+  <button class="btn primary" id="restart">Зіграти ще раз ↻</button>
+</section>
+</div>
+</main>
+<footer>Читай уважно, міркуй сміливо й пам’ятай: добро завжди має значення! ✨</footer>
+</div>
+<script>
+const questions = [
+ {level:"Легкий",q:"Хто є авторами казки «Пані Метелиця»?",a:["Шарль Перро","Брати Грімм","Ганс Крістіан Андерсен","Оскар Вайлд"],c:1,why:"Казку «Пані Метелиця» записали й опублікували німецькі збирачі народних казок брати Якоб і Вільгельм Грімм."},
+ {level:"Легкий",q:"Скільки дівчат було в жінки на початку казки?",a:["Одна","Троє","Двоє","Четверо"],c:2,why:"У жінки були рідна донька та пасербиця — дві дівчини."},
+ {level:"Легкий",q:"Якою була пасербиця?",a:["Працьовитою й доброю","Лінивою та пихатою","Злою і жорстокою","Байдужою до всіх"],c:0,why:"Пасербиця була роботящою, терплячою та привітною, хоча мачуха змушувала її багато працювати."},
+ {level:"Середній",q:"Що дівчина робила біля криниці, коли впустила веретено?",a:["Прала сорочки","Набирала воду","Пряла так старанно, що пальці закривавилися","Поливала квіти"],c:2,why:"Вона пряла біля криниці так довго й старанно, що пальці закривавилися."},
+ {level:"Середній",q:"Як пасербиця потрапила до чарівного світу пані Метелиці?",a:["Знайшла потаємні двері","Стрибнула в криницю по веретено","Її переніс чарівний птах","Вона заснула під деревом"],c:1,why:"Дівчина нахилилася за веретеном, упала в криницю й опинилася в іншому, чарівному світі."},
+ {level:"Середній",q:"Кому дівчина допомогла дорогою до оселі пані Метелиці?",a:["Печі з хлібом і яблуні","Леву та лисиці","Королю та принцесі","Конику й метелику"],c:0,why:"Вона витягла з печі хліб, який просився, та струсила стиглі яблука з дерева."},
+ {level:"Середній",q:"Що потрібно було робити в домі пані Метелиці?",a:["Вишивати королівський прапор","Доглядати коней","Підмітати й добре збивати перини","Готувати бенкети щодня"],c:2,why:"Дівчина сумлінно виконувала хатню роботу, зокрема збивала перини, від чого на землі йшов сніг."},
+ {level:"Складний",q:"Чому на землі, за казкою, йде сніг?",a:["Пані Метелиця розсипає чарівний пил","Дівчина збиває перини пані Метелиці","Хмари струшують біле пір’я","Так наказує зимовий король"],c:1,why:"Коли пані Метелиця збиває свої перини, пір’я летить униз і стає снігом на землі."},
+ {level:"Складний",q:"Чим пані Метелиця нагородила працьовиту дівчину?",a:["Мішком коштовного каміння","Золотим дощем, що вкрив її","Чарівною короною","Палацом і каретою"],c:1,why:"На прощання пані Метелиця обсипала дівчину золотом за її старанність і доброту."},
+ {level:"Складний",q:"Чому рідна донька мачухи теж вирушила до пані Метелиці?",a:["Хотіла повернути веретено","Її покликали друзі","Заздрила нагороді пасербиці й захотіла золота","Шукала нову домівку"],c:2,why:"Побачивши золото на пасербиці, мачуха послала власну доньку сподіваючись на таку саму винагороду."},
+ {level:"Складний",q:"Як поводилася лінива дівчина в чарівному світі?",a:["Допомагала всім без нагадувань","Відмовлялася працювати й не хотіла допомагати","Працювала ще старанніше за пасербицю","Одразу попросилася додому"],c:1,why:"Вона не хотіла працювати й відмовляла тим, хто просив допомоги, тому не заслужила нагороди."},
+ {level:"Складний",q:"Яка головна думка казки «Пані Метелиця»?",a:["Багатство важливіше за все","У пригодах завжди допомагає хитрість","За доброту, працьовитість і готовність допомогти винагороджують","Не варто вирушати з дому"],c:2,why:"Казка прославляє працьовитість, доброту й чуйність та засуджує лінощі й заздрість."}
+];
+let index=0, points=0, locked=false;
+const $=id=>document.getElementById(id);
+function render(){
+ locked=false;
+ const item=questions[index];
+ $("counter").textContent=`Запитання ${index+1} із ${questions.length}`;
+ $("score").textContent=`⭐ Бали: ${points}`;
+ $("progress").style.width=`${index/questions.length*100}%`;
+ $("level").textContent=`Рівень: ${item.level.toLowerCase()}`;
+ $("question").textContent=item.q;
+ $("answers").innerHTML="";
+ $("feedback").className="feedback"; $("feedback").textContent="";
+ $("next").classList.add("hidden");
+ item.a.forEach((answer,i)=>{
+   const b=document.createElement("button"); b.className="answer";
+   b.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span></span>`;
+   b.querySelector("span:last-child").textContent=answer;
+   b.addEventListener("click",()=>choose(i,b));
+   $("answers").appendChild(b);
+ });
+}
+function choose(choice,button){
+ if(locked)return; locked=true;
+ const item=questions[index], buttons=[...$("answers").querySelectorAll("button")];
+ buttons.forEach((b,i)=>{b.disabled=true;if(i===item.c)b.classList.add("correct");});
+ const fb=$("feedback");
+ if(choice===item.c){points++;fb.className="feedback show good";fb.textContent="✨ Правильно! "+item.why;}
+ else{button.classList.add("wrong");fb.className="feedback show bad";fb.textContent="Спробуй запам’ятати! Правильна відповідь: «"+item.a[item.c]+"». "+item.why;}
+ $("score").textContent=`⭐ Бали: ${points}`;
+ $("progress").style.width=`${(index+1)/questions.length*100}%`;
+ $("next").textContent=index===questions.length-1?"Побачити результат 🏆":"Наступне запитання ✨";
+ $("next").classList.remove("hidden");
+}
+function finish(){
+ $("game").classList.add("hidden");$("result").classList.remove("hidden");
+ $("finalScore").textContent=`${points} / ${questions.length}`;
+ let title,emoji,stars,txt;
+ if(points>=11){title="Справжній знавець казок!";emoji="👑";stars="★ ★ ★";txt="Чудовий результат! Ти уважно читав/читала казку й добре розумієш, чому важливі доброта та працьовитість.";}
+ else if(points>=8){title="Чарівний успіх!";emoji="🪄";stars="★ ★ ☆";txt="Дуже добре! Ти пам’ятаєш головні події казки. Перечитай моменти, у яких сумнівався/сумнівалася, — і буде ще краще.";}
+ else if(points>=5){title="Крок до майстерності!";emoji="📚";stars="★ ☆ ☆";txt="Непоганий початок! Пригадай, як поводилися дві дівчини та за що кожна отримала свою винагороду. Спробуй ще раз.";}
+ else{title="Час для нової казкової спроби!";emoji="🌱";stars="☆ ☆ ☆";txt="Не засмучуйся: кожна спроба допомагає вчитися. Перечитай казку «Пані Метелиця» та повернися до вікторини — ти зможеш!"}
+ $("resultTitle").textContent=title;$("resultEmoji").textContent=emoji;$("resultStars").textContent=stars;$("resultText").textContent=txt;
+ $("progress").style.width="100%";
+}
+$("next").addEventListener("click",()=>{if(index<questions.length-1){index++;render();}else finish();});
+$("restart").addEventListener("click",()=>{index=0;points=0;$("result").classList.add("hidden");$("game").classList.remove("hidden");render();});
+render();
+</script>
+</body>
+</html>
